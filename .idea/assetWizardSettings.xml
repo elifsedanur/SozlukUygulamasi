@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/compare_arrows/baseline_compare_arrows_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/manage_search/baseline_manage_search_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,7 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_compare_arrows_24" />
+                            <entry key="color" value="f1eaea" />
+                            <entry key="outputName" value="ara" />
                             <entry key="sourceFile" value="C:\Users\elifs\Desktop\Android\SozlukUygulamasi" />
                           </map>
                         </option>

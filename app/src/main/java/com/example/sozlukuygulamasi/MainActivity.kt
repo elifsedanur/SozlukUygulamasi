@@ -6,31 +6,30 @@ import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.hazirveritabanikullanimi.DatabaseCopyHelper
 import com.example.sozlukuygulamasi.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() ,SearchView.OnQueryTextListener{
     private lateinit var binding:ActivityMainBinding
     private  lateinit var kelimeListesi:ArrayList<Kelimeler>
     private lateinit var adapter: KelimelerAdapter
+    private lateinit var vt:VeriTabaniYardimcisi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        veriTabaniKopyala()
 
         binding.toolbar.setTitle("Sözlük Uygulaması")
         setSupportActionBar(binding.toolbar)
         binding.rv.setHasFixedSize(true)
         binding.rv.layoutManager = LinearLayoutManager(this@MainActivity)
 
-        kelimeListesi = ArrayList()
+        vt = VeriTabaniYardimcisi(this@MainActivity)
+        kelimeListesi = Kelimelerdao().tumKelimeler(vt)
 
-        var k1 = Kelimeler(1,"Dog","Köpek")
-        var k2 = Kelimeler(2,"Fish ","Balık")
-        var k3 = Kelimeler(3,"Table","Masa")
 
-        kelimeListesi.add(k1)
-        kelimeListesi.add(k2)
-        kelimeListesi.add(k3)
 
         adapter = KelimelerAdapter(this@MainActivity,kelimeListesi)
         binding.rv.adapter = adapter
@@ -46,10 +45,31 @@ class MainActivity : AppCompatActivity() ,SearchView.OnQueryTextListener{
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null) {
+            arama(query)
+        }
         return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
+        if (newText != null) {
+            arama(newText)
+        }
        return true
+    }
+    fun veriTabaniKopyala(){
+        val copyHelper = DatabaseCopyHelper(this@MainActivity)
+
+        try {
+            copyHelper.createDataBase()
+            copyHelper.openDataBase()
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
+    fun arama(arananKelime:String){
+        kelimeListesi = Kelimelerdao().kelimeAra(vt,arananKelime)
+        adapter = KelimelerAdapter(this@MainActivity,kelimeListesi)
+        binding.rv.adapter = adapter
     }
 }
