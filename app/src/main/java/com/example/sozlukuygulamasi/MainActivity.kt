@@ -1,5 +1,6 @@
 package com.example.sozlukuygulamasi
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -33,6 +34,10 @@ class MainActivity : AppCompatActivity() ,SearchView.OnQueryTextListener{
 
         adapter = KelimelerAdapter(this@MainActivity,kelimeListesi)
         binding.rv.adapter = adapter
+
+        binding.fab.setOnClickListener {
+            startActivity(Intent(this@MainActivity,KelimeEklemeActivity::class.java))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
